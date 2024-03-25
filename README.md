@@ -3,7 +3,10 @@ This is the official implementation of diff-gaussian-rasterization module in CG-
 
 # Diff-gaussian-rasterization-Full
 Input
+
 output
+
 Gradients
+
 Running Code
 # Diff-gaussian-rasterization-Light (Ignore )
