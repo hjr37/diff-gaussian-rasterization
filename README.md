@@ -4,7 +4,7 @@ This is the official implementation of diff-gaussian-rasterization module in CG-
 # Diff-gaussian-rasterization-Full
 ## Input
 
-The main components of Diff-Gaussian rasterization are `GaussianRasterizationSettings` and `GaussianRasterizer`. The `GaussianRasterizer` is employed with the objective of invoking a meticulously optimized C++/CUDA rasterization routine. It accomplishes this by utilizing the `GaussianRasterizationSettings` as input. The `GaussianRasterizationSettings` encapsulates the essential parameters and configurations required for the rasterization process, ensuring precise control and customization of the rendering output.
+<p style="text-align: justify;">The main components of Diff-Gaussian rasterization are <code>GaussianRasterizationSettings</code> and <code>GaussianRasterizer</code>. The <code>GaussianRasterizer</code> is employed with the objective of invoking a meticulously optimized C++/CUDA rasterization routine. It accomplishes this by utilizing the <code>GaussianRasterizationSettings</code> as input. The <code>GaussianRasterizationSettings</code> encapsulates the essential parameters and configurations required for the rasterization process, ensuring precise control and customization of the rendering output. </p>
 
 - Class `GaussianRasterizer`
 
