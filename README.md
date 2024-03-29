@@ -2,12 +2,17 @@
 This is the official implementation of diff-gaussian-rasterization module in <a href="https://github.com/hjr37/CG-SLAM">CG-SLAM</a>.
 # Derivation Framework
 ## Overview
+<p align="center">
   <img src="./assets/derivation1.png" hspace="20"/>
-  
+</p>
+
 ## Color Branch
+<p align="center">
   <img src="./assets/derivation2.png" hspace="20"/>
-  
+</p>
+
 ## Opacity Branch
+<p align="center">
   <img src="./assets/derivation3.png" hspace="20"/>  
 </p>
 
