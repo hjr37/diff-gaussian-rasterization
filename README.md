@@ -1,6 +1,10 @@
 # Diff-gaussian-rasterization w.r.t camera pose (4×4 Transformation Matrix)
 This is the official implementation of diff-gaussian-rasterization module in <a href="https://github.com/hjr37/CG-SLAM">CG-SLAM</a>.
 # Derivation Framework
+![derivation-1](./assets/derivation1.png)
+![derivation-2](./assets/derivation2.png)
+![derivation-3](./assets/derivation3.png)
+
 
 # Diff-gaussian-rasterization-Full
 ## Input
