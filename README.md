@@ -19,29 +19,37 @@ We have decomposed the entire pose derivation process from <strong>top to bottom
 
 # Diff-gaussian-rasterization-Full
 ## Running Code
-
-
 <p style="text-align: justify;">This is the method to invoke our <strong>diff-gaussian-rasterization</strong> library.</p>
 
 ```python
 render(viewpoint_cam, self.gaussians, self.pipe_hyper, self.background, viewmatrix=w2cT, fov=(self.half_tanfovx, self.half_tanfovy), HW=(self.H, self.W), gt_depth=gt_depth, track_off=True, map_off=False)
 ```
+<p style="text-align: justify;">In our diff-gaussian-rasterization framework, we add a set of arguements: </p>
 
-
+```
+Args:
+    --viewmatrix: View matrix used for transforming from world coordinate system to camera coordinate system, default is None.
+    --fov: Field of view, default is None.
+    --HW: Image height and width, default is None.
+    --gt_depth: Ground truth depth map used for calculating depth-related metrics, default is None.
+    --track_off: Flag to turn off tracking mode, default is False.
+    --map_off: Flag to turn off mapping mode, default is False.
+    --tracking_mask_indices: Tracking mask indices used for controlling opacity, default is None.
+```
 
 ## output
-- The output of `GasussianRasterizer`:
+- The output of `GasussianRasterizer` is a <code>dict{}</code>:
 ```
-    --render: rendered_image,
-    --viewspace_points: screenspace_points,
-    --visibility_filter: radii > 0,
-    --radii: radii,
-    --depth: depth, 
-    --depth_median: depth_median,
-    --opacity_map: opacity_map,
-    --depth_var: depth_var,
-    --gau_uncertainty: gau_uncertainty,
-    --num_related_pixels: gau_related_pixels
+    --'render': Rendered color image.
+    --'viewspace_points': Points in the screen coordinate system.
+    --'visibility_filter': A visibility filter indicating the visibility of Gaussian distributions.
+    --'radii': Screen-space radii of the Gaussian distributions.
+    --'depth': Rendered Depth map.
+    --'depth_median':  Depth map rendered using an alternative rendering strategy, as described in our research paper.
+    --'opacity_map': Opacity map.
+    --'depth_var': Depth variance map, as elaborated in our research paper.
+    --'gau_uncertainty': Uncertainty of the Gaussian distributions.
+    --'num_related_pixels': Number of pixels related to the Gaussian distributions.
 ```
 
 # Diff-gaussian-rasterization-Light (Ignore )
