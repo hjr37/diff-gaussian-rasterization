@@ -24,7 +24,7 @@ We have decomposed the entire pose derivation process from <strong>top to bottom
 ```python
 render(viewpoint_cam, self.gaussians, self.pipe_hyper, self.background, viewmatrix=w2cT, fov=(self.half_tanfovx, self.half_tanfovy), HW=(self.H, self.W), gt_depth=gt_depth, track_off=True, map_off=False)
 ```
-<p style="text-align: justify;">In our diff-gaussian-rasterization framework, we add a set of arguements: </p>
+<p style="text-align: justify;">In our specially designed diff-gaussian-rasterization framework, we add a set of arguements: </p>
 
 ```
 Args:
