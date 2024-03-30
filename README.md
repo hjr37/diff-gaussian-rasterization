@@ -19,10 +19,12 @@ We have decomposed the entire pose derivation process from <strong>top to bottom
 
 # Diff-gaussian-rasterization-Full
 ## Running Code
+
+
+<p style="text-align: justify;">This is the method to invoke our <strong>diff-gaussian-rasterization</strong> library.</p>
 ```python
 render(viewpoint_cam, self.gaussians, self.pipe_hyper, self.background, viewmatrix=w2cT, fov=(self.half_tanfovx, self.half_tanfovy), HW=(self.H, self.W), gt_depth=gt_depth, track_off=True, map_off=False)
 ```
-<p style="text-align: justify;"> </p>
 
 
 
