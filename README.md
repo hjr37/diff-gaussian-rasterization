@@ -58,7 +58,7 @@ In our proposed <a href="https://github.com/hjr37/CG-SLAM">CG-SLAM</a>, due to e
 ## Installation
 ```bash
 git clone https://github.com/hjr37/diff-gaussian-rasterization.git
-cd diff-gaussian-rasterization-full
+cd diff-gaussian-rasterization-light
 pip install .
 ```
 
