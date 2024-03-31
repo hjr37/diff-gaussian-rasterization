@@ -1,0 +1,21 @@
+# ninja log v5
+1	1953	1704636935	/mnt/data2/hujiarui/Code/accelerated_gau_slam/submodules/diff-gaussian-rasterization/build/temp.linux-x86_64-cpython-37/cuda_rasterizer/backward.o	4276e6ee2c309658
+2	21400	1704636954	/mnt/data2/hujiarui/Code/accelerated_gau_slam/submodules/diff-gaussian-rasterization/build/temp.linux-x86_64-cpython-37/ext.o	85b905e48addd896
+30	1787	1704636967	/mnt/data2/hujiarui/Code/accelerated_gau_slam/submodules/diff-gaussian-rasterization/build/temp.linux-x86_64-cpython-37/cuda_rasterizer/forward.o	6928744b44aa6a37
+31	7885	1704636973	/mnt/data2/hujiarui/Code/accelerated_gau_slam/submodules/diff-gaussian-rasterization/build/temp.linux-x86_64-cpython-37/cuda_rasterizer/rasterizer_impl.o	5dd6a2cc38f9d27b
+31	43797	1704637009	/mnt/data2/hujiarui/Code/accelerated_gau_slam/submodules/diff-gaussian-rasterization/build/temp.linux-x86_64-cpython-37/rasterize_points.o	1f239199bf664798
+41	1713	1704637059	/mnt/data2/hujiarui/Code/accelerated_gau_slam/submodules/diff-gaussian-rasterization/build/temp.linux-x86_64-cpython-37/cuda_rasterizer/forward.o	6928744b44aa6a37
+42	7454	1704637065	/mnt/data2/hujiarui/Code/accelerated_gau_slam/submodules/diff-gaussian-rasterization/build/temp.linux-x86_64-cpython-37/cuda_rasterizer/rasterizer_impl.o	5dd6a2cc38f9d27b
+38	1855	1704637111	/mnt/data2/hujiarui/Code/accelerated_gau_slam/submodules/diff-gaussian-rasterization/build/temp.linux-x86_64-cpython-37/cuda_rasterizer/forward.o	6928744b44aa6a37
+38	7129	1704637117	/mnt/data2/hujiarui/Code/accelerated_gau_slam/submodules/diff-gaussian-rasterization/build/temp.linux-x86_64-cpython-37/cuda_rasterizer/rasterizer_impl.o	5dd6a2cc38f9d27b
+34	1778	1704637159	/mnt/data2/hujiarui/Code/accelerated_gau_slam/submodules/diff-gaussian-rasterization/build/temp.linux-x86_64-cpython-37/cuda_rasterizer/forward.o	6928744b44aa6a37
+451	2363	1704637305	/mnt/data2/hujiarui/Code/accelerated_gau_slam/submodules/diff-gaussian-rasterization/build/temp.linux-x86_64-cpython-37/cuda_rasterizer/forward.o	6928744b44aa6a37
+639	2445	1704795685	/mnt/data2/hujiarui/Code/accelerated_gau_slam/submodules/diff-gaussian-rasterization/build/temp.linux-x86_64-cpython-37/cuda_rasterizer/forward.o	6928744b44aa6a37
+628	2539	1704796821	/mnt/data2/hujiarui/Code/accelerated_gau_slam/submodules/diff-gaussian-rasterization/build/temp.linux-x86_64-cpython-37/cuda_rasterizer/forward.o	6928744b44aa6a37
+519	2402	1704797030	/mnt/data2/hujiarui/Code/accelerated_gau_slam/submodules/diff-gaussian-rasterization/build/temp.linux-x86_64-cpython-37/cuda_rasterizer/forward.o	6928744b44aa6a37
+515	2294	1704797871	/mnt/data2/hujiarui/Code/accelerated_gau_slam/submodules/diff-gaussian-rasterization/build/temp.linux-x86_64-cpython-37/cuda_rasterizer/forward.o	6928744b44aa6a37
+546	2277	1704807820	/mnt/data2/hujiarui/Code/accelerated_gau_slam/submodules/diff-gaussian-rasterization/build/temp.linux-x86_64-cpython-37/cuda_rasterizer/forward.o	6928744b44aa6a37
+648	2496	1704815673	/mnt/data2/hujiarui/Code/accelerated_gau_slam/submodules/diff-gaussian-rasterization/build/temp.linux-x86_64-cpython-37/cuda_rasterizer/forward.o	6928744b44aa6a37
+683	2476	1704854893	/mnt/data2/hujiarui/Code/accelerated_gau_slam/submodules/diff-gaussian-rasterization/build/temp.linux-x86_64-cpython-37/cuda_rasterizer/forward.o	6928744b44aa6a37
+539	2392	1704855859	/mnt/data2/hujiarui/Code/accelerated_gau_slam/submodules/diff-gaussian-rasterization/build/temp.linux-x86_64-cpython-37/cuda_rasterizer/forward.o	6928744b44aa6a37
+514	2256	1704856531	/mnt/data2/hujiarui/Code/accelerated_gau_slam/submodules/diff-gaussian-rasterization/build/temp.linux-x86_64-cpython-37/cuda_rasterizer/forward.o	6928744b44aa6a37
