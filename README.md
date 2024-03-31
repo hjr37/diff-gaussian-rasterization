@@ -56,6 +56,12 @@ Args:
 # Diff-gaussian-rasterization-Light (Ignore )
 In our proposed <a href="https://github.com/hjr37/CG-SLAM">CG-SLAM</a>, due to efficiency, we adopted this light version, in which we ignored parts that have a minimal impact on the pose estimation. Missing parts in this version have been highlighted in blue boxes in the above images.
 ## Installation
+```bash
+git clone https://github.com/hjr37/diff-gaussian-rasterization.git
+cd diff-gaussian-rasterization-full
+pip install .
+```
+
 ## Running Code
 
 <p style="text-align: justify;">This is the method to invoke our <strong>diff-gaussian-rasterization</strong> library.</p>
