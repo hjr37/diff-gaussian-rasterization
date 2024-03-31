@@ -19,7 +19,7 @@ We have decomposed the entire pose derivation process from <strong>top to bottom
 
 # Diff-gaussian-rasterization-Full
 In this version, we convert the entire above derivation into a CUDA module. This version may be somewhat overqualified for the SLAM task, but we believe that this version should be exposed to more researchers to contribute to other 3D Gaussian topics.
-
+## Installation
 ## Running Code
 <p style="text-align: justify;">This is the method to invoke our <strong>diff-gaussian-rasterization</strong> library.</p>
 
@@ -39,7 +39,7 @@ Args:
     --tracking_mask_indices: Tracking mask indices used for controlling opacity, default is None.
 ```
 
-## output
+## Output
 - The output of `GasussianRasterizer` is a <code>dict{}</code>:
 ```
     --'render': Rendered color image.
@@ -55,4 +55,7 @@ Args:
 ```
 
 # Diff-gaussian-rasterization-Light (Ignore )
-In our proposed <a href="https://github.com/hjr37/CG-SLAM">CG-SLAM</a>, due to efficiency, we adopted this light version, in which we ignored parts that have a minimal impact on the pose estimation. Missing parts in this version have been highlighted in blue boxes in above images.
+In our proposed <a href="https://github.com/hjr37/CG-SLAM">CG-SLAM</a>, due to efficiency, we adopted this light version, in which we ignored parts that have a minimal impact on the pose estimation. Missing parts in this version have been highlighted in blue boxes in the above images.
+## Installation
+## Running Code
+## Output
