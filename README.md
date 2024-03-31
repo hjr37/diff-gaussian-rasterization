@@ -53,7 +53,7 @@ Args:
     --'opacity_map': Opacity map.
 ```
 
-# Diff-gaussian-rasterization-Light (Ignore )
+# Diff-gaussian-rasterization-Light (Ignore)
 In our proposed <a href="https://github.com/hjr37/CG-SLAM">CG-SLAM</a>, due to efficiency, we adopted this light version, in which we ignored parts that have a minimal impact on the pose estimation. Missing parts in this version have been highlighted in blue boxes in the above images.
 ## Installation
 ```bash
