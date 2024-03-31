@@ -22,7 +22,8 @@ In this version, we convert the entire above derivation into a CUDA module. This
 ## Installation
 ```bash
 git clone https://github.com/hjr37/diff-gaussian-rasterization.git
-cd 
+cd diff-gaussian-rasterization-full
+pip install .
 ```
 
 ## Running Code
