@@ -4,17 +4,17 @@ This is the official implementation of diff-gaussian-rasterization module in <a 
 We have decomposed the entire pose derivation process from <strong>top to bottom</strong>, which is clearly visualized in the following figures. More detailed results will come soon!!!!
 ## Overview
 <p align="center">
-  <img src="./assets/derivation1.png" hspace="20"/>
+  <img src="./assets/derivation1.png" width="600" height="450"/>
 </p>
 
 ## Color Branch
 <p align="center">
-  <img src="./assets/derivation2.png" hspace="20"/>
+  <img src="./assets/derivation2.png" width="500" height="600"/>
 </p>
 
 ## Opacity Branch
 <p align="center">
-  <img src="./assets/derivation3.png" hspace="20"/>  
+  <img src="./assets/derivation3.png" width="500" height="550"/>  
 </p>
 
 # Diff-gaussian-rasterization-Full
