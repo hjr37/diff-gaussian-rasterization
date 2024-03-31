@@ -30,7 +30,7 @@ pip install .
 <p style="text-align: justify;">This is the method to invoke our <strong>diff-gaussian-rasterization</strong> library.</p>
 
 ```python
-render(viewpoint_cam, self.gaussians, self.pipe_hyper, self.background, viewmatrix=w2cT, fov=(self.half_tanfovx, self.half_tanfovy), HW=(self.H, self.W), gt_depth=gt_depth, track_off=True, map_off=False)
+render(viewpoint_cam, self.gaussians, self.pipe_hyper, self.background, viewmatrix=w2cT, fov=(self.half_tanfovx, self.half_tanfovy), HW=(self.H, self.W), gt_depth=gt_depth)
 ```
 <p style="text-align: justify;">In our specially designed diff-gaussian-rasterization framework, we add a set of arguements: </p>
 
@@ -40,9 +40,6 @@ Args:
     --fov: Field of view, default is None.
     --HW: Image height and width, default is None.
     --gt_depth: Ground truth depth map used for calculating depth-related metrics, default is None.
-    --track_off: Flag to turn off tracking mode, default is False.
-    --map_off: Flag to turn off mapping mode, default is False.
-    --tracking_mask_indices: Tracking mask indices used for controlling opacity, default is None.
 ```
 
 ## Output
@@ -53,11 +50,7 @@ Args:
     --'visibility_filter': A visibility filter indicating the visibility of Gaussian distributions.
     --'radii': Screen-space radii of the Gaussian distributions.
     --'depth': Rendered Depth map.
-    --'depth_median':  Depth map rendered using an alternative rendering strategy, as described in our research paper.
     --'opacity_map': Opacity map.
-    --'depth_var': Depth variance map, as elaborated in our research paper.
-    --'gau_uncertainty': Uncertainty of the Gaussian distributions.
-    --'num_related_pixels': Number of pixels related to the Gaussian distributions.
 ```
 
 # Diff-gaussian-rasterization-Light (Ignore )
