@@ -220,7 +220,7 @@ __global__ void preprocessCUDA(int P, int D, int M,
 	if (det == 0.0f)
 		return;
 	float det_inv = 1.f / det;
-	float3 conic = { cov.z * det_inv, -cov.y * det_inv, cov.x * det_inv }; // the inverse of the variance matrix, which is called conic matrix, 这里用了二维矩阵的求逆公式
+	float3 conic = { cov.z * det_inv, -cov.y * det_inv, cov.x * det_inv }; 
 
 	// Compute extent in screen space (by finding eigenvalues of
 	// 2D covariance matrix). Use extent to compute a bounding rectangle
