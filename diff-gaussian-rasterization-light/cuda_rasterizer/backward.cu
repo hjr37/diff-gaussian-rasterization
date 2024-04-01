@@ -566,11 +566,6 @@ renderCUDA(
 			const float alpha = min(0.99f, con_o.w * G);
 			if (alpha < 15.0f / 255.0f)
 				continue;
-			
-			// if (depths[collected_id[j]] < 0.9 * gt_px_depth || depths[collected_id[j]] > 1.1 * gt_px_depth)
-			// {
-			// 	continue;
-			// }
 
 			T = T / (1.f - alpha);
 			const float dchannel_dcolor = alpha * T;
@@ -581,7 +576,6 @@ renderCUDA(
 			// gradients w.r.t. alpha (blending factor for a Gaussian/pixel
 			// pair).
 			float dL_dalpha = 0.0f;
-			// float dL_dalpha_color = 0.0f;
 			const int global_id = collected_id[j];
 			for (int ch = 0; ch < C; ch++)
 			{
@@ -592,8 +586,6 @@ renderCUDA(
 
 				const float dL_dchannel = dL_dpixel[ch];
 				dL_dalpha += (c - accum_rec[ch]) * dL_dchannel;
-				// dL_dalpha_color += (c - accum_rec[ch]) * dL_dchannel;
-
 
 				// Update the gradients w.r.t. color of the Gaussian. 
 				// Atomic, since this pixel is just one of potentially
@@ -602,7 +594,6 @@ renderCUDA(
 				{
 					atomicAdd(&(dL_dcolors[global_id * C + ch]), dchannel_dcolor * dL_dchannel);
 				}
-				// atomicAdd(&(dL_dcolors[global_id * C + ch]), dchannel_dcolor * dL_dchannel);
 			}
 			
 			// Propagate gradients from pixel depth to opacity
@@ -619,8 +610,6 @@ renderCUDA(
 			{
 				atomicAdd(&(dL_ddepths[global_id]), dL_ddepth + dL_dpixel_depth_var * dpixel_depth_ddepth * 2. * (c_d - gt_px_depth));
 			}
-			// dL_dalpha += (c_var - accum_var_rec) * dL_dpixel_depth_var;
-			// atomicAdd(&(dL_ddepths[global_id]), dL_ddepth + dL_dpixel_depth_var * dpixel_depth_ddepth * 2. * (c_d - gt_px_depth));
 
 			dL_dalpha *= T;
 			// Update last alpha (to be used in the next iteration)
@@ -673,34 +662,6 @@ renderCUDA(
 					mid_once = false;
 				}
 			}
-			// if (T > 0.5f && mid_once)
-			// {	
-			// 	float mul3 = view[2] * means[global_id].x + view[6] * means[global_id].y + view[10] * means[global_id].z + view[14];
-			// 	atomicAdd(&(dL_dmeans[global_id].x), (view[2] - view[3] * mul3) * dL_dpixel_median_depth * 1.0f);
-			// 	atomicAdd(&(dL_dmeans[global_id].y), (view[6] - view[7] * mul3) * dL_dpixel_median_depth * 1.0f);
-			// 	atomicAdd(&(dL_dmeans[global_id].z), (view[10] - view[11] * mul3) * dL_dpixel_median_depth * 1.0f);
-			// 	mid_once = false;
-			// }
-			// if (alpha * T > max_terminate_p)
-			// {	
-			// 	max_id = global_id;
-			// 	max_terminate_p = alpha * T;
-			// }
-
-
-
-			// atomicAdd(&(dL_dview[0]), dgndcs_dview[global_id * 12 + 0].x * dL_dndcs_x + dgndcs_dview[global_id * 12 + 0].y * dL_dndcs_y);
-			// atomicAdd(&(dL_dview[1]), dgndcs_dview[global_id * 12 + 1].x * dL_dndcs_x + dgndcs_dview[global_id * 12 + 1].y * dL_dndcs_y);
-			// atomicAdd(&(dL_dview[2]), dgndcs_dview[global_id * 12 + 2].x * dL_dndcs_x + dgndcs_dview[global_id * 12 + 2].y * dL_dndcs_y + dg_camd_dviewmatrix[global_id * 4 + 0] * dL_ddepth);
-			// atomicAdd(&(dL_dview[4]), dgndcs_dview[global_id * 12 + 3].x * dL_dndcs_x + dgndcs_dview[global_id * 12 + 3].y * dL_dndcs_y);
-			// atomicAdd(&(dL_dview[5]), dgndcs_dview[global_id * 12 + 4].x * dL_dndcs_x + dgndcs_dview[global_id * 12 + 4].y * dL_dndcs_y);
-			// atomicAdd(&(dL_dview[6]), dgndcs_dview[global_id * 12 + 5].x * dL_dndcs_x + dgndcs_dview[global_id * 12 + 5].y * dL_dndcs_y + dg_camd_dviewmatrix[global_id * 4 + 1] * dL_ddepth);
-			// atomicAdd(&(dL_dview[8]), dgndcs_dview[global_id * 12 + 6].x * dL_dndcs_x + dgndcs_dview[global_id * 12 + 6].y * dL_dndcs_y);
-			// atomicAdd(&(dL_dview[9]), dgndcs_dview[global_id * 12 + 7].x * dL_dndcs_x + dgndcs_dview[global_id * 12 + 7].y * dL_dndcs_y);
-			// atomicAdd(&(dL_dview[10]), dgndcs_dview[global_id * 12 + 8].x * dL_dndcs_x + dgndcs_dview[global_id * 12 + 8].y * dL_dndcs_y + dg_camd_dviewmatrix[global_id * 4 + 2] * dL_ddepth);
-			// atomicAdd(&(dL_dview[12]), dgndcs_dview[global_id * 12 + 9].x * dL_dndcs_x + dgndcs_dview[global_id * 12 + 9].y * dL_dndcs_y);
-			// atomicAdd(&(dL_dview[13]), dgndcs_dview[global_id * 12 + 10].x * dL_dndcs_x + dgndcs_dview[global_id * 12 + 10].y * dL_dndcs_y);
-			// atomicAdd(&(dL_dview[14]), dgndcs_dview[global_id * 12 + 11].x * dL_dndcs_x + dgndcs_dview[global_id * 12 + 11].y * dL_dndcs_y + dg_camd_dviewmatrix[global_id * 4 + 3] * dL_ddepth);
 			
 			if(!map_off)
 			{
@@ -717,46 +678,8 @@ renderCUDA(
 				atomicAdd(&(dL_dopacity[global_id]), G * dL_dalpha);
 				
 			}
-
-			// // Update gradients w.r.t. 2D mean position of the Gaussian
-			// atomicAdd(&dL_dmean2D[global_id].x, dL_dG * dG_ddelx * ddelx_dx);
-			// atomicAdd(&dL_dmean2D[global_id].y, dL_dG * dG_ddely * ddely_dy);
-
-			// // Update gradients w.r.t. 2D covariance (2x2 matrix, symmetric)
-			// atomicAdd(&dL_dconic2D[global_id].x, -0.5f * gdx * d.x * dL_dG);
-			// atomicAdd(&dL_dconic2D[global_id].y, -0.5f * gdx * d.y * dL_dG);
-			// atomicAdd(&dL_dconic2D[global_id].w, -0.5f * gdy * d.y * dL_dG);
-
-			// // Update gradients w.r.t. opacity of the Gaussian
-			// atomicAdd(&(dL_dopacity[global_id]), G * dL_dalpha);
 		}
 	}
-	// if (max_id > 0)
-	// {
-	// 	float mul3 = view[2] * means[max_id].x + view[6] * means[max_id].y + view[10] * means[max_id].z + view[14];
-	// 	atomicAdd(&(dL_dmeans[max_id].x), (view[2] - view[3] * mul3) * dL_dpixel_median_depth * 1.0f);
-	// 	atomicAdd(&(dL_dmeans[max_id].y), (view[6] - view[7] * mul3) * dL_dpixel_median_depth * 1.0f);
-	// 	atomicAdd(&(dL_dmeans[max_id].z), (view[10] - view[11] * mul3) * dL_dpixel_median_depth * 1.0f);
-	// 	// atomicAdd(&(dL_dmeans[max_id].x), (view[2]) * dL_dpixel_median_depth * 1.0f);
-	// 	// atomicAdd(&(dL_dmeans[max_id].y), (view[6]) * dL_dpixel_median_depth * 1.0f);
-	// 	// atomicAdd(&(dL_dmeans[max_id].z), (view[10]) * dL_dpixel_median_depth * 1.0f);
-	// }
-	
-	// if (!track_off)
-	// {
-	// 	atomicAdd(&(dL_dview[0]), dL_dv0);
-	// 	atomicAdd(&(dL_dview[1]), dL_dv1);
-	// 	atomicAdd(&(dL_dview[2]), dL_dv2);
-	// 	atomicAdd(&(dL_dview[4]), dL_dv4);
-	// 	atomicAdd(&(dL_dview[5]), dL_dv5);
-	// 	atomicAdd(&(dL_dview[6]), dL_dv6);
-	// 	atomicAdd(&(dL_dview[8]), dL_dv8);
-	// 	atomicAdd(&(dL_dview[9]), dL_dv9);
-	// 	atomicAdd(&(dL_dview[10]), dL_dv10);
-	// 	atomicAdd(&(dL_dview[12]), dL_dv12);
-	// 	atomicAdd(&(dL_dview[13]), dL_dv13);
-	// 	atomicAdd(&(dL_dview[14]), dL_dv14);
-	// }
 	if ((!track_off) && inside)
 	{
 		atomicAdd(&(dL_dview[pix_id*16 + 0]), dL_dv0);
