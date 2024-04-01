@@ -19,7 +19,7 @@
 namespace CudaRasterizer
 {
 	template <typename T>
-	static void obtain(char*& chunk, T*& ptr, std::size_t count, std::size_t alignment) //alignment==128说明是以16字节（16*8=128bit）进行内存对齐
+	static void obtain(char*& chunk, T*& ptr, std::size_t count, std::size_t alignment) 
 	{
 		std::size_t offset = (reinterpret_cast<std::uintptr_t>(chunk) + alignment - 1) & ~(alignment - 1);
 		ptr = reinterpret_cast<T*>(offset);
