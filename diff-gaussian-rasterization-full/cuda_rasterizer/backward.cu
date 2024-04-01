@@ -977,10 +977,6 @@ ComputePG(
 		{
 			const int coll_id = point_list[range.y - progress - 1]; //start in the BACK
 			collected_id[block.thread_rank()] = coll_id;
-			// collected_xy[block.thread_rank()] = points_xy_image[coll_id];
-			// collected_conic_opacity[block.thread_rank()] = conic_opacity[coll_id];
-			// for (int i = 0; i < C; i++)
-			// 	collected_colors[i * BLOCK_SIZE + block.thread_rank()] = colors[coll_id * C + i];
 		}
 		block.sync();
 
@@ -991,10 +987,6 @@ ComputePG(
 			
 			if ((global_id == single_pix_gs_id[valid_seq])&(!shut))
 			{	
-				// if(pix_id == 500)
-				// {
-				// 	printf("%d, %d\n", valid_seq, global_id);
-				// }
 				// Part-1 : color w.r.t Pose
 				//Cam-x 
 				glm::vec3 dp_dCx = single_dpixel_dgc[valid_seq] * dgc_dCampos[global_id * 3 + 0];
