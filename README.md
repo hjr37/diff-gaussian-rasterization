@@ -46,9 +46,6 @@ Args:
 - The output of `GasussianRasterizer` is a <code>dict{}</code>:
 ```
     --'render': Rendered Color map.
-    --'viewspace_points': Points in the screen coordinate system.
-    --'visibility_filter': A visibility filter indicating the visibility of Gaussian distributions.
-    --'radii': Screen-space radii of the Gaussian distributions.
     --'depth': Rendered Depth map.
     --'opacity_map': Rendered Silhouette map.
 ```
@@ -83,18 +80,14 @@ Args:
     --gt_depth: GGround truth depth map used for depth-related rasterization.
     --track_off: Flag to turn off the tracking component in the mapping process.
     --map_off: Flag to turn off the mapping component in the tracking process.
-    --tracking_mask_indices: Tracking mask indices used for controlling opacity, default is None.
 ```
 ## Output
 
 - The output of `GasussianRasterizer` is a <code>dict{}</code>:
 ```
     --'render': Rendered Color map.
-    --'viewspace_points': Points in the screen coordinate system.
-    --'visibility_filter': A visibility filter indicating the visibility of Gaussian distributions.
-    --'radii': Screen-space radii of the Gaussian distributions.
     --'depth': Rendered Depth map.
-    --'depth_median':  Depth map rendered using an alternative rendering strategy, as described in our research paper.
+    --'depth_median':  Depth map rendered by an alternative 'median strategy'.
     --'opacity_map': Rendered Silhouette map.
     --'depth_var': Rendered Uncertainty map (depth variance).
     --'gau_uncertainty': Uncertainty of the Gaussian primitives.
