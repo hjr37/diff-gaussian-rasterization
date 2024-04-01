@@ -45,12 +45,12 @@ Args:
 ## Output
 - The output of `GasussianRasterizer` is a <code>dict{}</code>:
 ```
-    --'render': Rendered color image.
+    --'render': Rendered Color map.
     --'viewspace_points': Points in the screen coordinate system.
     --'visibility_filter': A visibility filter indicating the visibility of Gaussian distributions.
     --'radii': Screen-space radii of the Gaussian distributions.
     --'depth': Rendered Depth map.
-    --'opacity_map': Opacity map.
+    --'opacity_map': Rendered Silhouette map.
 ```
 
 # Diff-gaussian-rasterization-Light
@@ -89,14 +89,14 @@ Args:
 
 - The output of `GasussianRasterizer` is a <code>dict{}</code>:
 ```
-    --'render': Rendered color image.
+    --'render': Rendered Color map.
     --'viewspace_points': Points in the screen coordinate system.
     --'visibility_filter': A visibility filter indicating the visibility of Gaussian distributions.
     --'radii': Screen-space radii of the Gaussian distributions.
     --'depth': Rendered Depth map.
     --'depth_median':  Depth map rendered using an alternative rendering strategy, as described in our research paper.
-    --'opacity_map': Opacity map.
-    --'depth_var': Depth variance map, as elaborated in our research paper.
-    --'gau_uncertainty': Uncertainty of the Gaussian distributions.
-    --'num_related_pixels': Number of pixels related to the Gaussian distributions.
+    --'opacity_map': Rendered Silhouette map.
+    --'depth_var': Rendered Uncertainty map (depth variance).
+    --'gau_uncertainty': Uncertainty of the Gaussian primitives.
+    --'num_related_pixels': Number of dominated pixels related to the Gaussian primitives.
 ```
