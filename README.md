@@ -93,3 +93,10 @@ Args:
     --'gau_uncertainty': Uncertainty of the Gaussian primitives.
     --'num_related_pixels': Number of dominated pixels related to the Gaussian primitives.
 ```
+# Citation
+<pre><code>@article{hu2024cg,
+    title={CG-SLAM: Efficient Dense RGB-D SLAM in a Consistent Uncertainty-aware 3D Gaussian Field},
+    author={Hu, Jiarui and Chen, Xianhao and Feng, Boyin and Li, Guanglin and Yang, Liangjing and Bao, Hujun and Zhang, Guofeng and Cui, Zhaopeng},
+    journal={arXiv preprint arXiv:2403.16095},
+    year={2024}
+}
