@@ -18,7 +18,7 @@ We have decomposed the entire pose derivation process from <strong>top to bottom
 </p>
 
 # Diff-gaussian-rasterization-Full
-In this version, we convert the entire above derivation into a CUDA module. This version may be somewhat overqualified for the SLAM task, but we believe that this version should be exposed to more researchers to contribute to other 3D Gaussian topics.
+In this version, we convert the entire above derivation into a CUDA module. This version may be a bit redundant for the SLAM task, but we believe that this version should be exposed to more researchers to contribute to other 3D Gaussian topics.
 ## Installation
 ```bash
 git clone https://github.com/hjr37/diff-gaussian-rasterization.git
