@@ -36,10 +36,10 @@ render(viewpoint_cam, self.gaussians, self.pipe_hyper, self.background, viewmatr
 
 ```
 Args:
-    --viewmatrix: View matrix used for transforming from world coordinate system to camera coordinate system, default is None.
-    --fov: Field of view, default is None.
-    --HW: Image height and width, default is None.
-    --gt_depth: Ground truth depth map used for calculating depth-related metrics, default is None.
+    --viewmatrix: Transformation matrix from the world coordinate to the camera coordinate.
+    --fov: Field of view.
+    --HW: Image height and width.
+    --gt_depth: Ground truth depth map used for depth-related rasterization.
 ```
 
 ## Output
@@ -53,8 +53,12 @@ Args:
     --'opacity_map': Opacity map.
 ```
 
-# Diff-gaussian-rasterization-Light (Ignore)
-In our proposed <a href="https://github.com/hjr37/CG-SLAM">CG-SLAM</a>, due to efficiency, we adopted this light version, in which we ignored parts that have a minimal impact on the pose estimation. Missing parts in this version have been highlighted in blue boxes in the above images.
+# Diff-gaussian-rasterization-Light
+In our proposed <a href="https://github.com/hjr37/CG-SLAM">CG-SLAM</a>, due to efficiency, we adopted this light version, in which we ignored parts that have a minimal impact on the pose estimation. Specifically, we ignored the following two parts:
+
+1. High-order SH coefficients (<strong>Color branch</strong>)
+
+2. Projected 2D covariance in EWA Splatting (<strong>Blue boxes in Opacity branch</strong>)
 ## Installation
 ```bash
 git clone https://github.com/hjr37/diff-gaussian-rasterization.git
@@ -73,12 +77,12 @@ render(viewpoint_cam, self.gaussians, self.pipe_hyper, self.background, viewmatr
 
 ```
 Args:
-    --viewmatrix: View matrix used for transforming from world coordinate system to camera coordinate system, default is None.
-    --fov: Field of view, default is None.
-    --HW: Image height and width, default is None.
-    --gt_depth: Ground truth depth map used for calculating depth-related metrics, default is None.
-    --track_off: Flag to turn off tracking mode, default is False.
-    --map_off: Flag to turn off mapping mode, default is False.
+    --viewmatrix: Transformation matrix from the world coordinate to the camera coordinate.
+    --fov: Field of view.
+    --HW: Image height and width.
+    --gt_depth: GGround truth depth map used for depth-related rasterization.
+    --track_off: Flag to turn off the tracking component in the mapping process.
+    --map_off: Flag to turn off the mapping component in the tracking process.
     --tracking_mask_indices: Tracking mask indices used for controlling opacity, default is None.
 ```
 ## Output
