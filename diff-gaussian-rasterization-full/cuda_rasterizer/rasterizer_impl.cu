@@ -203,8 +203,6 @@ CudaRasterizer::BinningState CudaRasterizer::BinningState::fromChunk(char*& chun
 // Forward rendering procedure for differentiable rasterization
 // of Gaussians.
 
-/*   origin version
-
 int CudaRasterizer::Rasterizer::forward(
 	std::function<char* (size_t)> geometryBuffer,
 	std::function<char* (size_t)> binningBuffer,
@@ -229,7 +227,7 @@ int CudaRasterizer::Rasterizer::forward(
 	int* radii)
 {
 	const float focal_y = height / (2.0f * tan_fovy);
-	const float focal_x = width / (2.0f * tan_fovx);  //这里focal_y和focal_x应该是因为像素不是一个正方形
+	const float focal_x = width / (2.0f * tan_fovx); 
 
 	size_t chunk_size = required<GeometryState>(P);
 	char* chunkptr = geometryBuffer(chunk_size);
@@ -244,9 +242,9 @@ int CudaRasterizer::Rasterizer::forward(
 	dim3 block(BLOCK_X, BLOCK_Y, 1);
 
 	// Dynamically resize image-based auxiliary buffers during training
-	int img_chunk_size = required<ImageState>(width * height); //算一下需要多少大小的内存来存放xxxState
-	char* img_chunkptr = imageBuffer(img_chunk_size); //返回一个指针ptr，指向一块大小为chunk_size的内存地址（首地址）
-	ImageState imgState = ImageState::fromChunk(img_chunkptr, width * height); //从上述分配好的首地址开始，放置xxxState
+	int img_chunk_size = required<ImageState>(width * height); 
+	char* img_chunkptr = imageBuffer(img_chunk_size); 
+	ImageState imgState = ImageState::fromChunk(img_chunkptr, width * height); 
 
 	if (NUM_CHANNELS != 3 && colors_precomp == nullptr)
 	{
@@ -277,7 +275,7 @@ int CudaRasterizer::Rasterizer::forward(
 		geomState.rgb,
 		geomState.conic_opacity,
 		tile_grid,
-		geomState.tiles_touched, //一个Gaussian覆盖的tile数目
+		geomState.tiles_touched,
 		prefiltered
 	);
 
@@ -317,7 +315,7 @@ int CudaRasterizer::Rasterizer::forward(
 		binningState.point_list_unsorted, binningState.point_list,
 		num_rendered, 0, 32 + bit);
 
-	cudaMemset(imgState.ranges, 0, tile_grid.x * tile_grid.y * sizeof(uint2)); //cudaMemset函数将设备内存中的指定区域（由devPtr和count参数指定）的所有字节设置为指定的value值。
+	cudaMemset(imgState.ranges, 0, tile_grid.x * tile_grid.y * sizeof(uint2));
 
 	// Identify start and end of per-tile workloads in sorted list
 	if (num_rendered > 0)
@@ -375,7 +373,7 @@ std::tuple<int, int> CudaRasterizer::Rasterizer::forward(
 	int* radii)
 {
 	const float focal_y = height / (2.0f * tan_fovy);
-	const float focal_x = width / (2.0f * tan_fovx);  //这里focal_y和focal_x应该是因为像素不是一个正方形
+	const float focal_x = width / (2.0f * tan_fovx);  
 
 	size_t chunk_size = required<GeometryState>(P);
 	char* chunkptr = geometryBuffer(chunk_size);
@@ -390,9 +388,9 @@ std::tuple<int, int> CudaRasterizer::Rasterizer::forward(
 	dim3 block(BLOCK_X, BLOCK_Y, 1);
 
 	// Dynamically resize image-based auxiliary buffers during training
-	int img_chunk_size = required<ImageState>(width * height); //算一下需要多少大小的内存来存放xxxState
-	char* img_chunkptr = imageBuffer(img_chunk_size); //返回一个指针ptr，指向一块大小为chunk_size的内存地址（首地址）
-	ImageState imgState = ImageState::fromChunk(img_chunkptr, width * height); //从上述分配好的首地址开始，放置xxxState
+	int img_chunk_size = required<ImageState>(width * height);
+	char* img_chunkptr = imageBuffer(img_chunk_size); 
+	ImageState imgState = ImageState::fromChunk(img_chunkptr, width * height); 
 
 	if (NUM_CHANNELS != 3 && colors_precomp == nullptr)
 	{
@@ -463,7 +461,7 @@ std::tuple<int, int> CudaRasterizer::Rasterizer::forward(
 		binningState.point_list_unsorted, binningState.point_list,
 		num_rendered, 0, 32 + bit);
 
-	cudaMemset(imgState.ranges, 0, tile_grid.x * tile_grid.y * sizeof(uint2)); //cudaMemset函数将设备内存中的指定区域（由devPtr和count参数指定）的所有字节设置为指定的value值。
+	cudaMemset(imgState.ranges, 0, tile_grid.x * tile_grid.y * sizeof(uint2)); 
 
 	// Identify start and end of per-tile workloads in sorted list
 	if (num_rendered > 0)
