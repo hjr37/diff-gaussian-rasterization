@@ -492,30 +492,4 @@ void CudaRasterizer::Rasterizer::backward(
 			(glm::vec4*)dL_drot), 
 			debug)
 	}
-
-	// const float* cov3D_ptr = (cov3D_precomp != nullptr) ? cov3D_precomp : geomState.cov3D;
-	// CHECK_CUDA(BACKWARD::preprocess(P, D, M,
-	// 	(float3*)means3D,
-	// 	radii,
-	// 	shs,
-	// 	geomState.clamped,
-	// 	(glm::vec3*)scales,
-	// 	(glm::vec4*)rotations,
-	// 	scale_modifier,
-	// 	cov3D_ptr,
-	// 	viewmatrix,
-	// 	projmatrix,
-	// 	focal_x, focal_y,
-	// 	tan_fovx, tan_fovy,
-	// 	(glm::vec3*)campos,
-	// 	(float3*)dL_dmean2D,
-	// 	dL_dconic,
-	// 	(glm::vec3*)dL_dmean3D,
-	// 	dL_dcolor,
-	// 	dL_ddepth,
-	// 	dL_dcov3D,
-	// 	dL_dsh,
-	// 	(glm::vec3*)dL_dscale,
-	// 	(glm::vec4*)dL_drot), 
-	// 	debug)
 }
