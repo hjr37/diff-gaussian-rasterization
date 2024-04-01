@@ -89,14 +89,14 @@ __device__ float3 computeCov2D(const float3& mean, float focal_x, float focal_y,
 	glm::mat3 J = glm::mat3(
 		focal_x / t.z, 0.0f, -(focal_x * t.x) / (t.z * t.z),
 		0.0f, focal_y / t.z, -(focal_y * t.y) / (t.z * t.z),
-		0, 0, 0);  //! 这里的J矩阵之所以是这样，因为这里的投影已经不再是归一化平面，或者说焦距平面了，而是进一步又转化成了像素坐标系下的像素平面，单位为pixel. TODO: verify this matrix.
+		0, 0, 0); 
 
 	glm::mat3 W = glm::mat3(
 		viewmatrix[0], viewmatrix[4], viewmatrix[8],
 		viewmatrix[1], viewmatrix[5], viewmatrix[9],
 		viewmatrix[2], viewmatrix[6], viewmatrix[10]);
 
-	glm::mat3 T = W * J;   //这里要留意glm是一个右乘模型，这里的W*J，实际上像是我们习惯上python的J*W.
+	glm::mat3 T = W * J; 
 
 	glm::mat3 Vrk = glm::mat3(
 		cov3D[0], cov3D[1], cov3D[2],
@@ -107,7 +107,6 @@ __device__ float3 computeCov2D(const float3& mean, float focal_x, float focal_y,
 
 	// Apply low-pass filter: every Gaussian should be at least
 	// one pixel wide/high. Discard 3rd row and column.
-	//这里的low-pass filter可以这么理解，就是对一个2D gaussian来说，增加它协方差矩阵中两个对角线元素的大小，这样一来等于整个2d gaussian更加平滑，平缓，变化更缓和，即缓解了高频区域，所以抗走样了。
 	cov[0][0] += 0.3f;
 	cov[1][1] += 0.3f;
 	return { float(cov[0][0]), float(cov[0][1]), float(cov[1][1]) };
@@ -191,7 +190,7 @@ __global__ void preprocessCUDA(int P, int D, int M,
 
 	// Perform near culling, quit if outside.
 	float3 p_view;
-	if (!in_frustum(idx, orig_points, viewmatrix, projmatrix, prefiltered, p_view))  //这里这个projmatrix具体是指什么？和viewmatrix有什么不同 ？ TODO
+	if (!in_frustum(idx, orig_points, viewmatrix, projmatrix, prefiltered, p_view)) 
 		return;
 
 	// Transform point by projecting
@@ -230,7 +229,7 @@ __global__ void preprocessCUDA(int P, int D, int M,
 	float mid = 0.5f * (cov.x + cov.z);
 	float lambda1 = mid + sqrt(max(0.1f, mid * mid - det));
 	float lambda2 = mid - sqrt(max(0.1f, mid * mid - det));
-	float my_radius = ceil(3.f * sqrt(max(lambda1, lambda2))); //协方差矩阵的特征值代表特征向量方向上的方差，最大特征值就是整个分布离散程度最大的方向（特征向量）上的方差，然后开根号成标准差，然后做一个高斯分布的3*sigma法则得到半径
+	float my_radius = ceil(3.f * sqrt(max(lambda1, lambda2)));
 	float2 point_image = { ndc2Pix(p_proj.x, W), ndc2Pix(p_proj.y, H) };
 	uint2 rect_min, rect_max;
 	getRect(point_image, my_radius, rect_min, rect_max, grid);
@@ -281,7 +280,7 @@ renderCUDA(
 {
 	// Identify current tile and associated min/max pixel range.
 	auto block = cg::this_thread_block();
-	uint32_t horizontal_blocks = (W + BLOCK_X - 1) / BLOCK_X;  //这种计算方式是为了保证block的分配一定是够的，假如不能整除的时候，哪怕是只多出来了一个像素，那也得为这一个pixel多分配一个block
+	uint32_t horizontal_blocks = (W + BLOCK_X - 1) / BLOCK_X; 
 	uint2 pix_min = { block.group_index().x * BLOCK_X, block.group_index().y * BLOCK_Y };
 	uint2 pix_max = { min(pix_min.x + BLOCK_X, W), min(pix_min.y + BLOCK_Y , H) };
 	uint2 pix = { pix_min.x + block.thread_index().x, pix_min.y + block.thread_index().y };
@@ -336,7 +335,7 @@ renderCUDA(
 			collected_xy[block.thread_rank()] = points_xy_image[coll_id];
 			collected_conic_opacity[block.thread_rank()] = conic_opacity[coll_id];
 		}
-		block.sync(); //可以在一个线程块内的所有线程都完成其任务之后进行同步
+		block.sync(); 
 
 		// Iterate over current batch
 		for (int j = 0; !done && j < min(BLOCK_SIZE, toDo); j++)
@@ -360,16 +359,6 @@ renderCUDA(
 			float alpha = min(0.99f, con_o.w * exp(power));
 			if (alpha < 15.0f / 255.0f)
 				continue;
-			// if (depths[collected_id[j]] < 0.9 * gt_px_depth || depths[collected_id[j]] > 1.1 * gt_px_depth)
-			// {
-			// 	continue;
-			// }
-			// float test_T = T * (1 - alpha);
-			// if (test_T < 0.0001f) //0.0001f
-			// {
-			// 	done = true;
-			// 	continue;
-			// }
 
 			// Eq. (3) from 3D Gaussian splatting paper.
 			for (int ch = 0; ch < CHANNELS; ch++)
@@ -392,11 +381,6 @@ renderCUDA(
 			}
 		}
 	}
-	// if (pix_id ==0 or pix_id ==10000 or pix_id==50000)
-	// {
-	// 	printf("%d\n", valid_contributor);
-	// }
-	// printf("%d\n", n_valid_contrib[0]);
 	// All threads that treat valid pixel write out their final
 	// rendering data to the frame and auxiliary buffers.
 	if (inside)
