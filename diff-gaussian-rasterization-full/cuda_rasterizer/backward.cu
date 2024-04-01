@@ -156,7 +156,7 @@ __device__ void computeColorFromSH(int idx, int deg, int max_coeffs, const glm::
 	// Additional mean gradient is accumulated in below methods.
 	dL_dmeans[idx] += glm::vec3(dL_dmean.x, dL_dmean.y, dL_dmean.z);
 
-	glm::vec3 dRGBdCamx = dRGBdx * dxdCamx + dRGBdy * dydCamx + dRGBdz * dzdCamx;    // c2w意义下的相机坐标
+	glm::vec3 dRGBdCamx = dRGBdx * dxdCamx + dRGBdy * dydCamx + dRGBdz * dzdCamx;
 	glm::vec3 dRGBdCamy = dRGBdx * dxdCamy + dRGBdy * dydCamy + dRGBdz * dzdCamy;
 	glm::vec3 dRGBdCamz = dRGBdx * dxdCamz + dRGBdy * dydCamz + dRGBdz * dzdCamz;
 
@@ -518,21 +518,10 @@ __global__ void preprocessCUDA(
 	dgndcs_dview[idx*12 + 6].x = m_w * perspec[0] * m.z;
 	dgndcs_dview[idx*12 + 9].x = m_w * perspec[0] * 1.0f;
 
-	// dgndcs_dview[idx*12 + 1].x = 0;
-	// dgndcs_dview[idx*12 + 4].x = 0;
-	// dgndcs_dview[idx*12 + 7].x = 0;
-	// dgndcs_dview[idx*12 + 10].x = 0;
-
 	dgndcs_dview[idx*12 + 2].x = m_hom.x * (-m_w * m_w) * m.x;
 	dgndcs_dview[idx*12 + 5].x = m_hom.x * (-m_w * m_w) * m.y;
 	dgndcs_dview[idx*12 + 8].x = m_hom.x * (-m_w * m_w) * m.z;
 	dgndcs_dview[idx*12 + 11].x = m_hom.x * (-m_w * m_w) * 1.0f;
-
-	// y_ndc w.r.t v0,v1,v2,v4,v5,v6,v8,v9,v10,v12,v13,v14
-	// dgndcs_dview[idx*12 + 0].y = 0;
-	// dgndcs_dview[idx*12 + 3].y = 0;
-	// dgndcs_dview[idx*12 + 6].y = 0;
-	// dgndcs_dview[idx*12 + 9].y = 0;
 
 	dgndcs_dview[idx*12 + 1].y = m_w * perspec[5] * m.x;
 	dgndcs_dview[idx*12 + 4].y = m_w * perspec[5] * m.y;
@@ -682,10 +671,6 @@ renderCUDA(
 			const float alpha = min(0.99f, con_o.w * G);
 			if (alpha < 15.0f / 255.0f)
 				continue;
-			// if (depths[collected_id[j]] < 0.9 * gt_px_depth || depths[collected_id[j]] > 1.1 * gt_px_depth)
-			// {
-			// 	continue;
-			// }
 
 			T = T / (1.f - alpha);
 			const float dchannel_dcolor = alpha * T;
@@ -733,10 +718,6 @@ renderCUDA(
 			{
 			dpix_dgc[(n_valid_contrib_cumsum[pix_id-1] + seq)] = dchannel_dcolor;
 			gau_id_l[(n_valid_contrib_cumsum[pix_id-1] + seq)] = global_id;
-			// if (pix_id == 500)
-			// {
-			// 	printf("%d, %d, %d\n", pix_id, seq, global_id);	
-			// }
 			pix_id_l[(n_valid_contrib_cumsum[pix_id-1] + seq)] = pix_id;
 			}
 			//end
@@ -850,9 +831,6 @@ renderCUDA(
 			// Update gradients w.r.t. opacity of the Gaussian
 			atomicAdd(&(dL_dopacity[global_id]), G * dL_dalpha);
 			
-			/*
-			atomicAdd 是CUDA编程中的一个原子操作函数，用于在多个线程同时访问共享内存位置时，确保对该位置的操作是原子的（不可分割的）。通常用于在CUDA设备上进行并行计算时，多个线程需要同时增加一个共享的计数器或变量的情况。
-			*/
 		}
 	}
 }
@@ -1290,18 +1268,6 @@ ComputePG(
 
 
 				// Summary
-				// dp_dv0 = add_f3_f3(dp_dv0, triple_add_f3(float3{dp_dv0_part1.x, dp_dv0_part1.y, dp_dv0_part1.z}, dp_dv0_part2_1, dp_dv0_part2_2));
-				// dp_dv1 = add_f3_f3(dp_dv1, triple_add_f3(float3{dp_dv1_part1.x, dp_dv1_part1.y, dp_dv1_part1.z}, dp_dv1_part2_1, dp_dv1_part2_2));
-				// dp_dv2 = add_f3_f3(dp_dv2, triple_add_f3(float3{dp_dv2_part1.x, dp_dv2_part1.y, dp_dv2_part1.z}, dp_dv2_part2_1, dp_dv2_part2_2));
-				// dp_dv4 = add_f3_f3(dp_dv4, triple_add_f3(float3{dp_dv4_part1.x, dp_dv4_part1.y, dp_dv4_part1.z}, dp_dv4_part2_1, dp_dv4_part2_2));
-				// dp_dv5 = add_f3_f3(dp_dv5, triple_add_f3(float3{dp_dv5_part1.x, dp_dv5_part1.y, dp_dv5_part1.z}, dp_dv5_part2_1, dp_dv5_part2_2));
-				// dp_dv6 = add_f3_f3(dp_dv6, triple_add_f3(float3{dp_dv6_part1.x, dp_dv6_part1.y, dp_dv6_part1.z}, dp_dv6_part2_1, dp_dv6_part2_2));
-				// dp_dv8 = add_f3_f3(dp_dv8, triple_add_f3(float3{dp_dv8_part1.x, dp_dv8_part1.y, dp_dv8_part1.z}, dp_dv8_part2_1, dp_dv8_part2_2));
-				// dp_dv9 = add_f3_f3(dp_dv9, triple_add_f3(float3{dp_dv9_part1.x, dp_dv9_part1.y, dp_dv9_part1.z}, dp_dv9_part2_1, dp_dv9_part2_2));
-				// dp_dv10 = add_f3_f3(dp_dv10, triple_add_f3(float3{dp_dv10_part1.x, dp_dv10_part1.y, dp_dv10_part1.z}, dp_dv10_part2_1, dp_dv10_part2_2));
-				// dp_dv12 = add_f3_f3(dp_dv12, triple_add_f3(float3{dp_dv12_part1.x, dp_dv12_part1.y, dp_dv12_part1.z}, dp_dv12_part2_1, dp_dv12_part2_2));
-				// dp_dv13 = add_f3_f3(dp_dv13, triple_add_f3(float3{dp_dv13_part1.x, dp_dv13_part1.y, dp_dv13_part1.z}, dp_dv13_part2_1, dp_dv13_part2_2));
-				// dp_dv14 = add_f3_f3(dp_dv14, triple_add_f3(float3{dp_dv14_part1.x, dp_dv14_part1.y, dp_dv14_part1.z}, dp_dv14_part2_1, dp_dv14_part2_2));
 
 				dp_dv0 = add_f3_f3(dp_dv0, add_f3_f3(float3{dp_dv0_part1.x, dp_dv0_part1.y, dp_dv0_part1.z}, dp_dv0_part2_1));
 				dp_dv1 = add_f3_f3(dp_dv1, add_f3_f3(float3{dp_dv1_part1.x, dp_dv1_part1.y, dp_dv1_part1.z}, dp_dv1_part2_1));
@@ -1316,20 +1282,6 @@ ComputePG(
 				dp_dv13 = add_f3_f3(dp_dv13, add_f3_f3(float3{dp_dv13_part1.x, dp_dv13_part1.y, dp_dv13_part1.z}, dp_dv13_part2_1));
 				dp_dv14 = add_f3_f3(dp_dv14, add_f3_f3(float3{dp_dv14_part1.x, dp_dv14_part1.y, dp_dv14_part1.z}, dp_dv14_part2_1));
 
-
-
-				// dd_dv0 = dd_dv0_part1 + dd_dv0_part2_1 + dd_dv0_part2_2;
-				// dd_dv1 = dd_dv1_part1 + dd_dv1_part2_1 + dd_dv1_part2_2;
-				// dd_dv2 = dd_dv2_part1 + dd_dv2_part2_1 + dd_dv2_part2_2;
-				// dd_dv4 = dd_dv4_part1 + dd_dv4_part2_1 + dd_dv4_part2_2;
-				// dd_dv5 = dd_dv5_part1 + dd_dv5_part2_1 + dd_dv5_part2_2;
-				// dd_dv6 = dd_dv6_part1 + dd_dv6_part2_1 + dd_dv6_part2_2;
-				// dd_dv8 = dd_dv8_part1 + dd_dv8_part2_1 + dd_dv8_part2_2;
-				// dd_dv9 = dd_dv9_part1 + dd_dv9_part2_1 + dd_dv9_part2_2;
-				// dd_dv10 = dd_dv10_part1 + dd_dv10_part2_1 + dd_dv10_part2_2;
-				// dd_dv12 = dd_dv12_part1 + dd_dv12_part2_1 + dd_dv12_part2_2;
-				// dd_dv13 = dd_dv13_part1 + dd_dv13_part2_1 + dd_dv13_part2_2;
-				// dd_dv14 = dd_dv14_part1 + dd_dv14_part2_1 + dd_dv14_part2_2;
 
 				dd_dv0 = dd_dv0_part1 + dd_dv0_part2_1;
 				dd_dv1 = dd_dv1_part1 + dd_dv1_part2_1;
