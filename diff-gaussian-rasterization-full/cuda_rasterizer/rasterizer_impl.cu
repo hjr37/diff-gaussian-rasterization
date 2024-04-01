@@ -130,7 +130,7 @@ __global__ void identifyTileRanges(int L, uint64_t* point_list_keys, uint2* rang
 		uint32_t prevtile = point_list_keys[idx - 1] >> 32;
 		if (currtile != prevtile)
 		{
-			ranges[prevtile].y = idx;  //example：1 1 1 2 2 2 2 range[1]=0~3  range[2] = 3~7
+			ranges[prevtile].y = idx; 
 			ranges[currtile].x = idx;
 		}
 	}
@@ -421,7 +421,7 @@ std::tuple<int, int> CudaRasterizer::Rasterizer::forward(
 		geomState.rgb,
 		geomState.conic_opacity,
 		tile_grid,
-		geomState.tiles_touched, //一个Gaussian覆盖的tile数目
+		geomState.tiles_touched, 
 		prefiltered
 	);
 
@@ -494,12 +494,8 @@ std::tuple<int, int> CudaRasterizer::Rasterizer::forward(
 
 	cub::DeviceScan::InclusiveSum(imgState.scanning_space, imgState.scan_size,
 		imgState.n_valid_contrib, imgState.n_valid_contrib_cumsum, width * height);
-	// printf("%d, %d, %d\n", imgState.n_valid_contrib[0], imgState.n_valid_contrib[1], imgState.n_valid_contrib[2]);
-	// printf("%d, %d, %d\n", imgState.n_valid_contrib_cumsum[0], imgState.n_valid_contrib_cumsum[1], imgState.n_valid_contrib_cumsum[2]);
 	int num_related_primitives;
 	cudaMemcpy(&num_related_primitives, imgState.n_valid_contrib_cumsum + width * height - 1, sizeof(int), cudaMemcpyDeviceToHost);
-	// std::cout << imgState.n_valid_contrib_cumsum << std::endl;
-	// std::cout << num_related_primitives << std::endl;
 	return std::make_tuple(num_rendered, num_related_primitives);
 }
 
