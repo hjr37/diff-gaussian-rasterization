@@ -89,7 +89,6 @@ RasterizeGaussiansCUDA(
 	  {
 		M = sh.size(1);
       }
-	  // modified by jiarui
 	  forward_result = CudaRasterizer::Rasterizer::forward(
 	    geomFunc,
 		binningFunc,
@@ -117,7 +116,6 @@ RasterizeGaussiansCUDA(
 		out_uncertainty.contiguous().data<float>(),
 		radii.contiguous().data<int>());
   }
-  //modified by jiarui
   return std::make_tuple(std::get<0>(forward_result), std::get<1>(forward_result), out_color, out_depth, out_uncertainty, radii, geomBuffer, binningBuffer, imgBuffer);
 }
 
