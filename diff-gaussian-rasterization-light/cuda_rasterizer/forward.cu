@@ -365,11 +365,6 @@ renderCUDA(
 			if (alpha < 15.0f / 255.0f)
 				continue;
 
-			// if (depths[collected_id[j]] < 0.9 * gt_px_depth || depths[collected_id[j]] > 1.1 * gt_px_depth)
-			// {
-			// 	continue;
-			// }
-
 			float test_T = T * (1 - alpha);
 			if (test_T < 0.0001f)
 			{
@@ -383,21 +378,6 @@ renderCUDA(
 			weight += alpha * T;
 			D += depths[collected_id[j]] * alpha * T;
 
-			// var = (depths[collected_id[j]]-gt_px_depth) * (depths[collected_id[j]]-gt_px_depth) * alpha * T;
-			// atomicAdd(&(gau_uncertainty[collected_id[j]]), var);
-			// atomicAdd(&(gau_related_pixels[collected_id[j]]), 1);
-			D_var += (depths[collected_id[j]]-gt_px_depth) * (depths[collected_id[j]]-gt_px_depth) * alpha * T;
-			// if (gt_px_depth > 0.)
-			// {
-			// 	atomicAdd(&(gau_uncertainty[collected_id[j]]), ((depths[collected_id[j]]-gt_px_depth)) * (depths[collected_id[j]]-gt_px_depth) * alpha * T);
-			// 	atomicAdd(&(gau_related_pixels[collected_id[j]]), 1);
-			// }
-			// if (alpha * T > max_terminate_p)
-			// {	
-			// 	max_id = collected_id[j];
-			// 	max_terminate_p = alpha * T;
-			// }
-			// D_var += (depths[collected_id[j]]-gt_px_depth) * (depths[collected_id[j]]-gt_px_depth) * alpha * T;
 			if (T > 0.5f && test_T < 0.5)
 			{
 			    float dep_median = depths[collected_id[j]];
@@ -406,12 +386,7 @@ renderCUDA(
 				atomicAdd(&(gau_uncertainty[collected_id[j]]), ((depths[collected_id[j]]-gt_px_depth)) * (depths[collected_id[j]]-gt_px_depth) * alpha * T);
 				atomicAdd(&(gau_related_pixels[collected_id[j]]), 1);
 			}
-			// if (alpha* T  > max_terminate_p)
-			// {
-			//     float dep_median = depths[collected_id[j]];
-			// 	D_median = dep_median;
-			// 	max_terminate_p = alpha* T;
-			// }
+
 
 
 			T = test_T;
@@ -421,11 +396,7 @@ renderCUDA(
 			last_contributor = contributor;
 		}
 	}
-	// if (max_id > 0 && gt_px_depth > 0.)
-	// {
-	// 	atomicAdd(&(gau_uncertainty[max_id]), ((depths[max_id]-gt_px_depth)) * (depths[max_id]-gt_px_depth) * max_terminate_p);
-	// 	atomicAdd(&(gau_related_pixels[max_id]), 1);
-	// }
+
 	// All threads that treat valid pixel write out their final
 	// rendering data to the frame and auxiliary buffers.
 	if (inside)
